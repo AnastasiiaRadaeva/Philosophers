@@ -50,11 +50,13 @@ at the left of each philosopher.
 - To avoid philosophers duplicating forks, you should protect the forks state with a
 mutex for each of them.
 - Each philosopher should be a thread
+
 **Non common rules for philo_two:**
 - All the forks are in the middle of the table.
 - They have no states in memory but the number of available forks is represented by
 a semaphore.
 - Each philosopher should be a thread.
+
 **Non common rules for philo_three:**
 - All the forks are in the middle of the table.
 - They have no states in memory but the number of available forks is represented by
