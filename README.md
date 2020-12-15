@@ -3,7 +3,7 @@ School Project
 
 ## Task
 
-You will have to write 3 different programs but they will have the same basic rules:
+**You will have to write 3 different programs but they will have the same _basic rules_:**
 - This project is to be coded in C, following the Norm. Any leak, crash, undefined
 behavior or norm error means 0 to the project.
 - A number of philosophers are sitting at a round table doing one of three things:
@@ -43,4 +43,23 @@ with the philosopher number and timestamp_in_ms the current timestamp in millise
 - You can’t have more than 10 ms between the death of a philosopher and when it
 will print its death.
 - Again, philosophers should avoid to die!
+
+**Non common rules for philo_one:**
+- One fork between each philosopher, therefore there will be a fork at the right and
+at the left of each philosopher.
+- To avoid philosophers duplicating forks, you should protect the forks state with a
+mutex for each of them.
+- Each philosopher should be a thread
+**Non common rules for philo_two:**
+- All the forks are in the middle of the table.
+- They have no states in memory but the number of available forks is represented by
+a semaphore.
+- Each philosopher should be a thread.
+**Non common rules for philo_three:**
+- All the forks are in the middle of the table.
+- They have no states in memory but the number of available forks is represented by
+a semaphore.
+- Each philosopher should be a process and the main process should not be a philosopher.
+
+
 
