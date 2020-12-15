@@ -1,0 +1,2 @@
+# Philosophers
+School Project
