@@ -2,6 +2,7 @@
 School Project
 
 Task
+
 You will have to write 3 different programs but they will have the same basic rules:
 • This project is to be coded in C, following the Norm. Any leak, crash, undefined
 behavior or norm error means 0 to the project.
