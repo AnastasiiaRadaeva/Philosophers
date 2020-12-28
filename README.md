@@ -63,5 +63,8 @@ a semaphore.
 a semaphore.
 - Each philosopher should be a process and the main process should not be a philosopher.
 
+## Theory
+- [Введение в Операционные системы (Столяров)](http://www.stolyarov.info/books/pdf/osintro.pdf) - стр. 148-182
+
 
 
