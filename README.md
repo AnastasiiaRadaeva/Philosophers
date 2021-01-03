@@ -66,5 +66,6 @@ a semaphore.
 ## Theory
 - [Введение в Операционные системы (Столяров)](http://www.stolyarov.info/books/pdf/osintro.pdf) - стр. 148-182
 - [Измерение временных интервалов](http://www.ccfit.nsu.ru/~kireev/lab1/lab1time.htm)
+- [Потоки](https://habr.com/ru/post/326138/)
 
 
