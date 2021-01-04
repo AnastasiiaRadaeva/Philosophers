@@ -50,7 +50,7 @@ long	ft_atoi(char *str, int flag)
 		n = (n * 10 + (str[index] - '0'));
 		if (n > 2147483647)
 			ft_putendl_plus_exit(WRONG_RANGE, 0);
-		else if ((n > 200 || n == 0) && flag == 1)
+		else if ((n > 200 || n < 2) && flag == 1)
 			ft_putendl_plus_exit(NUM_OF_PH, 0);
 		index++;
 	}
@@ -58,3 +58,20 @@ long	ft_atoi(char *str, int flag)
 		ft_putendl_plus_exit(WRONG_FORMAT, 0);
 	return (n);
 }
+
+void ft_free(t_params **info, t_timepad **time, t_args ***args)
+{
+	free(*(*args)[0]->mut);
+	while (--(*info)->number_of_philo_and_forks >= 0)
+	{
+		free((*args)[(*info)->number_of_philo_and_forks]->philo);
+		free((*args)[(*info)->number_of_philo_and_forks]);
+	}
+	free(*args);
+	free(*info);
+	free((*time)->t_start);
+	free((*time)->current_t);
+	free((*time)->t_zone);
+	free(*time);
+}
+

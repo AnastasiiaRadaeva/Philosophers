@@ -29,7 +29,7 @@ D_FILES 		= $(patsubst %.c, %.d,	$(SOURCE_SRCS))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) -o $(NAME) -pthread
+	$(CC) $(FLAGS) $(OBJ) -o $(NAME) -pthread -g
 
 %.o : %.c
 	$(CC) $(FLAGS) -I$(HEADER_DIR) -c $< -o $@ -MD

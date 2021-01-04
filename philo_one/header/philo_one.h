@@ -26,6 +26,7 @@
 # define WRONG_RANGE "Error: you use wrong range (use 0 - 2 147 483 647)."
 # define WRONG_FORMAT "Error: wrong format of arguments (only numbers)."
 # define MALLOC "Error: malloc is failed."
+# define MUTEX_INIT "Error: initialization of mutex is failed."
 
 
 enum				philosophers_states
@@ -55,6 +56,19 @@ typedef struct 		s_params
 	 */
 }					t_params;
 
+typedef struct		s_philosopher
+{
+	long			number;
+	long 			left_fork;
+	long 			right_fork;
+}					t_philosopher;
+
+typedef struct		s_args
+{
+	t_philosopher	*philo;
+	pthread_mutex_t	**mut;
+}					t_args;
+
 typedef struct		s_timepad
 {
 	struct timeval	*t_start;
@@ -69,5 +83,6 @@ int			ft_strlen(const char *str);
 void		ft_putendl_plus_exit(char *str, int flag);
 t_timepad	*start_time(void);
 void		time_stop(t_timepad **time);
+void		ft_free(t_params **info, t_timepad **time, t_args ***args);
 
 #endif
