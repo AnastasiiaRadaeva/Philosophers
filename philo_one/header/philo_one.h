@@ -22,7 +22,7 @@
 #include <stdio.h>
 
 # define NUM_OF_ARGS "Error: wrong number of arguments (you can use 5 or 6)."
-# define NUM_OF_PH "Error: wrong number of philosophers (use 1 - 200)."
+# define NUM_OF_PH "Error: wrong number of philosophers (use 2 - 200)."
 # define WRONG_RANGE "Error: you use wrong range (use 0 - 2 147 483 647)."
 # define WRONG_FORMAT "Error: wrong format of arguments (only numbers)."
 # define MALLOC "Error: malloc is failed."
@@ -61,6 +61,7 @@ typedef struct		s_philosopher
 	long			number;
 	long 			left_fork;
 	long 			right_fork;
+	int 			state;
 }					t_philosopher;
 
 typedef struct		s_args
@@ -78,11 +79,16 @@ typedef struct		s_timepad
 
 }					t_timepad;
 
+extern int	g_error;
+
 long		ft_atoi(char *str, int flag);
 int			ft_strlen(const char *str);
-void		ft_putendl_plus_exit(char *str, int flag);
+void		ft_putendl_plus_error(char *str, int flag);
 t_timepad	*start_time(void);
-void		time_stop(t_timepad **time);
-void		ft_free(t_params **info, t_timepad **time, t_args ***args);
+void		*time_stop(t_timepad **time);
+int			ft_free(t_params **info, t_timepad **time, t_args ***args, int ret);
+void		ft_thinking(t_philosopher **philo, t_params *info);
+void		ft_sleeping(t_philosopher **philo, t_params *info);
+void		ft_eating(t_philosopher **philo, t_params *info);
 
 #endif
