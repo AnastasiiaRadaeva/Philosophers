@@ -100,6 +100,7 @@ int	main(int argc, char *argv[])
 	t_timepad		*time;
 	pthread_t 		*thread;
 	t_args			**args;
+	long 			i;
 
 	info = NULL;
 	time = NULL;
@@ -118,15 +119,30 @@ int	main(int argc, char *argv[])
 //
 //	if (argc == 1)
 	{
-		pthread_mutex_init(&g_print, NULL);
+		if (!(g_print = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t))))
+			ft_putendl_plus_error(MALLOC, -1);
+
+		if (!(g_time_to_die = (t_timepad **)malloc(sizeof(t_timepad *) * info->number_of_philo_and_forks)))
+			ft_putendl_plus_error(MALLOC, -1);
+		i = -1;
+		while (++i < info->number_of_philo_and_forks)
+		{
+			if (!(g_time_to_die[i] = (t_timepad *)malloc(sizeof(t_timepad))))
+			{
+				ft_putendl_plus_error(MALLOC, -1);
+				return (ft_free(&info, &time, &args, 0));
+			}
+			g_time_to_die[i]->timestamp = 0;
+		}
 		info = init_params(argv);
 		time = start_time();
 		args = init_args(info->number_of_philo_and_forks, &info, &time);
 		if (!(thread = (pthread_t *)malloc((sizeof(pthread_t) * info->number_of_philo_and_forks))))
 			ft_putendl_plus_error(MALLOC, -1);
+		if (pthread_mutex_init(g_print, NULL))
+			ft_putendl_plus_error(MUTEX_INIT, -1);
 		if (g_error == -1)
 			return (ft_free(&info, &time, &args, 0));
-
 
 //		printf("Start time: %li\n", time->timestamp);
 //
@@ -138,7 +154,6 @@ int	main(int argc, char *argv[])
 //			printf("%li\n\n", args[i]->philo->right_fork);
 //		}
 //		sleep(5);
-		time_stop(&time);
 //		printf("Stop time: %li\n", time->timestamp);
 		/*
 		 * check parser
@@ -153,6 +168,16 @@ int	main(int argc, char *argv[])
 		/*
 		 *
 		 */
+		i = 0;
+		while (g_time_to_die[i]->timestamp < info->time_to_die)
+		{
+			i = (!i || (info->number_of_philo_and_forks - 1)) ? 0 : i++;
+			time_stop(&g_time_to_die[i]);
+		}
+		pthread_mutex_lock(g_print);
+		print_state(args[i]->philo->number, &time, DEATH);
+//		остановить все потоки
+		pthread_mutex_unlock(g_print);
 	}
 	else
 		ft_putendl_plus_error(NUM_OF_ARGS, -1);

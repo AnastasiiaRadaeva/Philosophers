@@ -32,7 +32,7 @@
 # define L_FORK " has taken a left fork"
 # define EAT " is eating"
 # define SLEEP " is sleeping"
-# define THING " is thinking"
+# define THINK " is thinking"
 # define DEATH " died"
 
 
@@ -40,7 +40,8 @@ enum				philosophers_states
 {
 					eating,
 					sleeping,
-					thinking
+					thinking,
+					died
 };
 
 typedef struct 		s_params
@@ -77,7 +78,6 @@ typedef struct		s_timepad
 	struct timeval	*current_t;
 	long 			timestamp;
 	struct timezone	*t_zone;
-
 }					t_timepad;
 
 typedef struct		s_args
@@ -89,7 +89,8 @@ typedef struct		s_args
 }					t_args;
 
 extern int				g_error;
-extern pthread_mutex_t	g_print;
+extern pthread_mutex_t	*g_print;
+extern t_timepad		**g_time_to_die;
 
 long		ft_atoi(char *str, int flag);
 int			ft_strlen(const char *str);
@@ -97,9 +98,9 @@ void		ft_putendl_plus_error(char *str, int flag);
 t_timepad	*start_time(void);
 void		*time_stop(t_timepad **time);
 int			ft_free(t_params **info, t_timepad **time, t_args ***args, int ret);
-void		ft_think(t_philosopher **philo, t_params **info);
-void		ft_sleep(t_philosopher **philo, t_params **info);
-void		ft_eat(t_philosopher **philo, t_params **info);
+void		ft_think(t_philosopher **philo, t_params **info, t_timepad **time);
+void		ft_sleep(t_philosopher **philo, t_params **info, t_timepad **time);
+void		ft_eat(t_philosopher **philo, t_params **info, t_timepad **time, pthread_mutex_t **mut);
 void		*philosopher(void *args);
 void		ft_putnbr(long n);
 void 		print_state(long name, t_timepad **time, char *str);

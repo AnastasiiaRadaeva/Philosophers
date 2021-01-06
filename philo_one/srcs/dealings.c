@@ -40,35 +40,50 @@ void 	print_state(long name, t_timepad **time, char *str)
 	ft_putendl_plus_error(str, g_error);
 }
 
-void	ft_think(t_philosopher **philo, t_params **info)
+void	ft_think(t_philosopher **philo, t_params **info, t_timepad **time)
 {
 	(*philo)->state = thinking;
-
-
+	pthread_mutex_lock(g_print);
+	print_state((*philo)->number, time, THINK);
+	pthread_mutex_unlock(g_print);
 }
 
-void	ft_sleep(t_philosopher **philo, t_params **info)
+void	ft_sleep(t_philosopher **philo, t_params **info, t_timepad **time)
 {
 	(*philo)->state = sleeping;
-	usleep(info->time_to_sleep);
+	pthread_mutex_lock(g_print);
+	print_state((*philo)->number, time, SLEEP);
+	pthread_mutex_unlock(g_print);
+	usleep((*info)->time_to_sleep);
 }
 
-void	ft_eat(t_philosopher **philo, t_params **info)
+void	ft_eat(t_philosopher **philo, t_params **info, t_timepad **time, pthread_mutex_t **mut)
 {
+	pthread_mutex_lock(mut[(*philo)->right_fork]);
+	pthread_mutex_lock(g_print);
+	print_state((*philo)->number, time, R_FORK);
+	pthread_mutex_unlock(g_print);
+	pthread_mutex_lock(mut[(*philo)->left_fork]);
+	pthread_mutex_lock(g_print);
+	print_state((*philo)->number, time, L_FORK);
+	pthread_mutex_unlock(g_print);
 	(*philo)->state = eating;
-	usleep(info->time_to_eat);
+	pthread_mutex_lock(g_print);
+	print_state((*philo)->number, time, EAT);
+	g_time_to_die = start_time();
+	g_time_to_die->name_of_philo = (*philo)->number;
+	pthread_mutex_unlock(g_print);
+	usleep((*info)->time_to_eat);
+	pthread_mutex_unlock(mut[(*philo)->right_fork]);
+	pthread_mutex_unlock(mut[(*philo)->left_fork]);
 }
 
 void *philosopher(void *args)
 {
 	t_args			*arg;
-	t_philosopher	**philo;
-	t_params		**info;
 
 	arg = (t_args *)args;
-	*philo = arg->philo;
-	info = arg->info;
-	ft_think(philo, info);
-	ft_eat(philo, info);
-	ft_sleep(philo, info);
+	ft_think(&arg->philo, arg->info, arg->time);
+	ft_eat(&arg->philo, arg->info, arg->time, arg->mut);
+	ft_sleep(&arg->philo, arg->info, arg->time);
 }
