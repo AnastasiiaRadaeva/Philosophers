@@ -28,6 +28,13 @@
 # define MALLOC "Error: malloc is failed."
 # define MUTEX_INIT "Error: initialization of mutex is failed."
 
+# define R_FORK " has taken a right fork"
+# define L_FORK " has taken a left fork"
+# define EAT " is eating"
+# define SLEEP " is sleeping"
+# define THING " is thinking"
+# define DEATH " died"
+
 
 enum				philosophers_states
 {
@@ -64,12 +71,6 @@ typedef struct		s_philosopher
 	int 			state;
 }					t_philosopher;
 
-typedef struct		s_args
-{
-	t_philosopher	*philo;
-	pthread_mutex_t	**mut;
-}					t_args;
-
 typedef struct		s_timepad
 {
 	struct timeval	*t_start;
@@ -79,7 +80,16 @@ typedef struct		s_timepad
 
 }					t_timepad;
 
-extern int	g_error;
+typedef struct		s_args
+{
+	t_philosopher	*philo;
+	pthread_mutex_t	**mut;
+	t_params		**info;
+	t_timepad		**time;
+}					t_args;
+
+extern int				g_error;
+extern pthread_mutex_t	g_print;
 
 long		ft_atoi(char *str, int flag);
 int			ft_strlen(const char *str);
@@ -87,8 +97,12 @@ void		ft_putendl_plus_error(char *str, int flag);
 t_timepad	*start_time(void);
 void		*time_stop(t_timepad **time);
 int			ft_free(t_params **info, t_timepad **time, t_args ***args, int ret);
-void		ft_thinking(t_philosopher **philo, t_params *info);
-void		ft_sleeping(t_philosopher **philo, t_params *info);
-void		ft_eating(t_philosopher **philo, t_params *info);
+void		ft_think(t_philosopher **philo, t_params **info);
+void		ft_sleep(t_philosopher **philo, t_params **info);
+void		ft_eat(t_philosopher **philo, t_params **info);
+void		*philosopher(void *args);
+void		ft_putnbr(long n);
+void 		print_state(long name, t_timepad **time, char *str);
+
 
 #endif

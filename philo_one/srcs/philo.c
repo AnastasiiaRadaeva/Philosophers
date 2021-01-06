@@ -14,11 +14,6 @@
 
 int g_error = 0;
 
-void philosopher()
-{
-
-}
-
 t_params	*init_params(char **args)
 {
 	t_params	*info;
@@ -56,7 +51,7 @@ t_philosopher	*init_philo(long number, long index)
 	return (philo);
 }
 
-t_args	**init_args(long number)
+t_args	**init_args(long number, t_params **info, t_timepad **time)
 {
 	pthread_mutex_t	*mut;
 	long 			index;
@@ -93,6 +88,8 @@ t_args	**init_args(long number)
 		}
 		args[index]->philo = init_philo(number, index);
 		args[index]->mut = &mut;
+		args[index]->info = info;
+		args[index]->time = time;
 	}
 	return (args);
 }
@@ -101,7 +98,7 @@ int	main(int argc, char *argv[])
 {
 	t_params		*info;
 	t_timepad		*time;
-//	pthread_t 		*thread;
+	pthread_t 		*thread;
 	t_args			**args;
 
 	info = NULL;
@@ -121,21 +118,25 @@ int	main(int argc, char *argv[])
 //
 //	if (argc == 1)
 	{
+		pthread_mutex_init(&g_print, NULL);
 		info = init_params(argv);
-		args = init_args(info->number_of_philo_and_forks);
 		time = start_time();
+		args = init_args(info->number_of_philo_and_forks, &info, &time);
+		if (!(thread = (pthread_t *)malloc((sizeof(pthread_t) * info->number_of_philo_and_forks))))
+			ft_putendl_plus_error(MALLOC, -1);
 		if (g_error == -1)
 			return (ft_free(&info, &time, &args, 0));
 
-//		printf("Start time: %li\n", time->timestamp);
 
-		long i = -1;
-		while (++i < info->number_of_philo_and_forks)
-		{
-			printf("%li\n", args[i]->philo->number);
-			printf("%li\n", args[i]->philo->left_fork);
-			printf("%li\n\n", args[i]->philo->right_fork);
-		}
+//		printf("Start time: %li\n", time->timestamp);
+//
+//		long i = -1;
+//		while (++i < info->number_of_philo_and_forks)
+//		{
+//			printf("%li\n", args[i]->philo->number);
+//			printf("%li\n", args[i]->philo->left_fork);
+//			printf("%li\n\n", args[i]->philo->right_fork);
+//		}
 //		sleep(5);
 		time_stop(&time);
 //		printf("Stop time: %li\n", time->timestamp);

@@ -20,8 +20,8 @@ HEADER_DIR		=	header/
 SRCS_DIR		=	srcs/
 SRCS_LIST		=	philo.c\
 					utils.c\
-					timepad.c
-					#dealings.c
+					timepad.c\
+					dealings.c
 
 SOURCE_SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_LIST))
 OBJ				= $(patsubst %.c, %.o,	$(SOURCE_SRCS))
