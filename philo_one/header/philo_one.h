@@ -23,7 +23,7 @@
 
 # define NUM_OF_ARGS "Error: wrong number of arguments (you can use 5 or 6)."
 # define NUM_OF_PH "Error: wrong number of philosophers (use 2 - 200)."
-# define WRONG_RANGE "Error: you use wrong range (use 0 - 2 147 483 647)."
+# define WRONG_RANGE "Error: you use wrong range (use 0 - 2 147 483)."
 # define WRONG_FORMAT "Error: wrong format of arguments (only numbers)."
 # define MALLOC "Error: malloc is failed."
 # define MUTEX_INIT "Error: initialization of mutex is failed."
@@ -90,8 +90,8 @@ typedef struct		s_args
 
 extern int				g_error;
 extern pthread_mutex_t	*g_print;
-//extern t_timepad		**g_time_to_die;
-//extern int 				g_close;
+extern t_timepad		**g_time_to_die;
+extern int 				g_close;
 
 long		ft_atoi(char *str, int flag);
 int			ft_strlen(const char *str);
@@ -99,12 +99,13 @@ void		ft_putendl_plus_error(char *str, int flag);
 t_timepad	*start_time(void);
 void		*time_stop(t_timepad **time);
 int			ft_free(t_params **info, t_timepad **time, t_args ***args, int ret);
-void		ft_think(t_philosopher **philo, t_timepad **time);
-void		ft_sleep(t_philosopher **philo, t_params **info, t_timepad **time);
-void		ft_eat(t_philosopher **philo, t_params **info, t_timepad **time, pthread_mutex_t **mut);
+int 		ft_think(t_philosopher **philo, t_timepad **time);
+int 		ft_sleep(t_philosopher **philo, t_params **info, t_timepad **time);
+int 		ft_eat(t_philosopher **philo, t_params **info, t_timepad **time, pthread_mutex_t **mut);
 void		*philosopher(void *args);
 void		ft_putnbr(long n);
 void 		print_state(long name, t_timepad **time, char *str);
+int			unlock_ret(int flag, pthread_mutex_t *mut_1, pthread_mutex_t *mut_2);
 
 
 #endif

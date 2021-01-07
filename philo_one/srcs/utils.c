@@ -56,7 +56,7 @@ long	ft_atoi(char *str, int flag)
 	}
 	if (index != ft_strlen(str))
 		ft_putendl_plus_error(WRONG_FORMAT, -1);
-	return (n);
+	return ((flag == 1 || flag == 3) ? n : n * 1000);
 }
 
 int ft_free(t_params **info, t_timepad **time, t_args ***args, int ret)
