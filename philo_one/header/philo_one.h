@@ -90,7 +90,8 @@ typedef struct		s_args
 
 extern int				g_error;
 extern pthread_mutex_t	*g_print;
-extern t_timepad		**g_time_to_die;
+//extern t_timepad		**g_time_to_die;
+//extern int 				g_close;
 
 long		ft_atoi(char *str, int flag);
 int			ft_strlen(const char *str);
@@ -98,7 +99,7 @@ void		ft_putendl_plus_error(char *str, int flag);
 t_timepad	*start_time(void);
 void		*time_stop(t_timepad **time);
 int			ft_free(t_params **info, t_timepad **time, t_args ***args, int ret);
-void		ft_think(t_philosopher **philo, t_params **info, t_timepad **time);
+void		ft_think(t_philosopher **philo, t_timepad **time);
 void		ft_sleep(t_philosopher **philo, t_params **info, t_timepad **time);
 void		ft_eat(t_philosopher **philo, t_params **info, t_timepad **time, pthread_mutex_t **mut);
 void		*philosopher(void *args);

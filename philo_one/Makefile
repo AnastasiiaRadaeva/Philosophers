@@ -33,7 +33,7 @@ $(NAME): $(OBJ)
 	$(CC) $(FLAGS) $(OBJ) -o $(NAME) -pthread -g
 
 %.o : %.c
-	$(CC) $(FLAGS) -I$(HEADER_DIR) -c $< -o $@ -MD
+	$(CC) $(FLAGS) -I$(HEADER_DIR) -c $< -o $@ -MD -g
 include $(wildcard $(D_FILE))
 
 clean:

@@ -13,8 +13,10 @@
 #include "philo_one.h"
 
 int g_error = 0;
+//int g_close = 0;
+pthread_mutex_t	*g_print = NULL;
 
-t_params	*init_params(char **args)
+t_params	*init_params(char **args, int argc)
 {
 	t_params	*info;
 
@@ -27,7 +29,7 @@ t_params	*init_params(char **args)
 	info->time_to_die = ft_atoi(args[2], 0);
 	info->time_to_eat = ft_atoi(args[3], 0);
 	info->time_to_sleep = ft_atoi(args[4], 0);
-	if (args[5])
+	if (argc == 6)
 		info->number_of_times_each_philo_must_eat = ft_atoi(args[5], 0);
 	return (info);
 }
@@ -105,79 +107,65 @@ int	main(int argc, char *argv[])
 	info = NULL;
 	time = NULL;
 	args = NULL;
-	if (argc == 5 || argc == 6)
-//
-//	(void)argv;
-//	char **array;
-//	array = malloc(sizeof(char *) * 6);
-//	array[0] = "2";
-//	array[1] = "0";
-//	array[2] = "34";
-//	array[3] = "34";
-//	array[4] = "34";
-//	array[5] = "34";
-//
-//	if (argc == 1)
+//	if (argc == 5 || argc == 6)
+
+	(void)argv;
+	char **array;
+	array = malloc(sizeof(char *) * 6);
+	array[0] = "2";
+	array[1] = "2";
+	array[2] = "1000";
+	array[3] = "1500";
+	array[4] = "2000";
+	array[5] = "34";
+
+	if (argc == 1)
 	{
 		if (!(g_print = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t))))
 			ft_putendl_plus_error(MALLOC, -1);
 
-		if (!(g_time_to_die = (t_timepad **)malloc(sizeof(t_timepad *) * info->number_of_philo_and_forks)))
-			ft_putendl_plus_error(MALLOC, -1);
+//		if (!(g_time_to_die = (t_timepad **)malloc(sizeof(t_timepad *) * info->number_of_philo_and_forks)))
+//			ft_putendl_plus_error(MALLOC, -1);
 		i = -1;
-		while (++i < info->number_of_philo_and_forks)
-		{
-			if (!(g_time_to_die[i] = (t_timepad *)malloc(sizeof(t_timepad))))
-			{
-				ft_putendl_plus_error(MALLOC, -1);
-				return (ft_free(&info, &time, &args, 0));
-			}
-			g_time_to_die[i]->timestamp = 0;
-		}
-		info = init_params(argv);
-		time = start_time();
-		args = init_args(info->number_of_philo_and_forks, &info, &time);
+//		while (++i < info->number_of_philo_and_forks)
+//		{
+//			if (!(g_time_to_die[i] = (t_timepad *)malloc(sizeof(t_timepad))))
+//			{
+//				ft_putendl_plus_error(MALLOC, -1);
+//				return (ft_free(&info, &time, &args, 0));
+//			}
+//			g_time_to_die[i]->timestamp = 0;
+//		}
+		info = init_params(array, 5);
 		if (!(thread = (pthread_t *)malloc((sizeof(pthread_t) * info->number_of_philo_and_forks))))
 			ft_putendl_plus_error(MALLOC, -1);
+		time = start_time();
+		args = init_args(info->number_of_philo_and_forks, &info, &time);
 		if (pthread_mutex_init(g_print, NULL))
 			ft_putendl_plus_error(MUTEX_INIT, -1);
 		if (g_error == -1)
 			return (ft_free(&info, &time, &args, 0));
+		i = -1;
+		while (++i < info->number_of_philo_and_forks)
+			if (pthread_create(&thread[i], NULL, philosopher, args[i]))
+				return (ft_free(&info, &time, &args, 0));
 
-//		printf("Start time: %li\n", time->timestamp);
-//
-//		long i = -1;
-//		while (++i < info->number_of_philo_and_forks)
+//		i = 0;
+//		while (g_time_to_die[i]->timestamp < info->time_to_die) //добавить условие про количество раз, когда философы едят
 //		{
-//			printf("%li\n", args[i]->philo->number);
-//			printf("%li\n", args[i]->philo->left_fork);
-//			printf("%li\n\n", args[i]->philo->right_fork);
+//			i = (!i || (info->number_of_philo_and_forks - 1)) ? 0 : i++;
+//			time_stop(&g_time_to_die[i]);
 //		}
-//		sleep(5);
-//		printf("Stop time: %li\n", time->timestamp);
-		/*
-		 * check parser
-		 */
-//		printf("%li\n", info->number_of_philo_and_forks);
-//		printf("%li\n", info->time_to_die);
-//		printf("%li\n", info->time_to_eat);
-//		printf("%li\n", info->time_to_sleep);
-//		if (argc == 6)
-//			printf("%li\n", info->number_of_times_each_philo_must_eat);
-
-		/*
-		 *
-		 */
-		i = 0;
-		while (g_time_to_die[i]->timestamp < info->time_to_die)
-		{
-			i = (!i || (info->number_of_philo_and_forks - 1)) ? 0 : i++;
-			time_stop(&g_time_to_die[i]);
-		}
-		pthread_mutex_lock(g_print);
-		print_state(args[i]->philo->number, &time, DEATH);
-//		остановить все потоки
-		pthread_mutex_unlock(g_print);
+//		pthread_mutex_lock(g_print);
+//		print_state(args[i]->philo->number, &time, DEATH);
+//		g_close = 1;
+//		pthread_mutex_unlock(g_print);
+		i = -1;
+		while (++i < info->number_of_philo_and_forks)
+			pthread_join(thread[i], NULL);
+		i = -1;
+		while (++i < info->number_of_philo_and_forks)
+			pthread_mutex_destroy(&(*(args[0]->mut))[i]);
 	}
 	else
 		ft_putendl_plus_error(NUM_OF_ARGS, -1);
