@@ -119,21 +119,23 @@ int	main(int argc, char *argv[])
 	info = NULL;
 	time = NULL;
 	args = NULL;
-	if (argc == 5 || argc == 6)
-//
-//	(void)argv;
-//	char **array;
-//	array = malloc(sizeof(char *) * 6);
-//	array[0] = "2";
-//	array[1] = "3";
-//	array[2] = "3000";
-//	array[3] = "500";
-//	array[4] = "200";
-//	array[5] = "4";
-//
-//	if (argc == 1)
+//	if (argc == 5 || argc == 6)
+
+	(void)argv;
+	char **array;
+	array = malloc(sizeof(char *) * 6);
+	array[0] = "2";
+	array[1] = "3";
+	array[2] = "3000";
+	array[3] = "500";
+	array[4] = "200";
+	array[5] = "4";
+
+	if (argc == 1)
 	{
-		info = init_params(argv, argc);
+		argc = 5;
+		info = init_params(array, argc);
+		free(array);
 		if(!(g_number_of_meals = (int *)malloc(sizeof(int) * (*info)->number_of_philo_and_forks)))
 			ft_putendl_plus_error(MALLOC, -1);
 		i = -1;
@@ -147,7 +149,7 @@ int	main(int argc, char *argv[])
 		while (++i < (*info)->number_of_philo_and_forks)
 		{
 			if (!(g_time_to_die[i] = start_time()))
-				return (ft_free(info, &time, &args, 0));
+				return (ft_free(&info, &time, &args, 0));
 			gettimeofday(g_time_to_die[i]->current_t, g_time_to_die[i]->t_zone);
 		}
 		if (!(thread = (pthread_t *)malloc((sizeof(pthread_t) * (*info)->number_of_philo_and_forks))))
@@ -157,11 +159,14 @@ int	main(int argc, char *argv[])
 		if (pthread_mutex_init(g_print, NULL))
 			ft_putendl_plus_error(MUTEX_INIT, -1);
 		if (g_error == -1)
-			return (ft_free(info, &time, &args, 0));
+			return (ft_free(&info, &time, &args, 0));
 		i = -1;
 		while (++i < (*info)->number_of_philo_and_forks)
 			if (pthread_create(&thread[i], NULL, philosopher, args[i]))
-				return (ft_free(info, &time, &args, 0));
+			{
+				free(thread);
+				return (ft_free(&info, &time, &args, 0));
+			}
 
 		i = 0;
 		int number_of_philo_who_ate = 0;
@@ -198,8 +203,9 @@ int	main(int argc, char *argv[])
 		while (++i < (*info)->number_of_philo_and_forks)
 			pthread_mutex_destroy(&(*(args[0]->mut))[i]);
 		pthread_mutex_destroy(g_print);
+		free(thread);
 	}
 	else
 		ft_putendl_plus_error(NUM_OF_ARGS, -1);
-	return (ft_free(info, &time, &args, 0));
+	return (ft_free(&info, &time, &args, 0));
 }

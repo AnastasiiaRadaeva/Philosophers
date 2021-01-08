@@ -59,23 +59,41 @@ long	ft_atoi(char *str, int flag)
 	return ((flag == 1 || flag == 3) ? n : n * 1000);
 }
 
-int ft_free(t_params **info, t_timepad **time, t_args ***args, int ret)
+int ft_free(t_params ***info, t_timepad **time, t_args ***args, int ret)
 {
-	if (*args && (*args)[0] && *((*args)[0]->mut))
+	if (args && *args && (*args)[0] && *((*args)[0]->mut))
+	{
 		free(*((*args)[0]->mut));
-	if (*info)
-		while (--(*info)->number_of_philo_and_forks >= 0)
+		free(&(*((*args)[0]->mut)));
+	}
+	if (info && *info)
+		while (--(**info)->number_of_philo_and_forks >= 0)
 		{
-			if ((*args)[(*info)->number_of_philo_and_forks]->philo)
-				free((*args)[(*info)->number_of_philo_and_forks]->philo);
-			if ((*args)[(*info)->number_of_philo_and_forks])
-				free((*args)[(*info)->number_of_philo_and_forks]);
+			if ((*args)[(**info)->number_of_philo_and_forks]->philo)
+				free((*args)[(**info)->number_of_philo_and_forks]->philo);
+			if ((*args)[(**info)->number_of_philo_and_forks])
+				free((*args)[(**info)->number_of_philo_and_forks]);
+			if (g_time_to_die[(**info)->number_of_philo_and_forks])
+			{
+				if (g_time_to_die[(**info)->number_of_philo_and_forks]->t_zone)
+					free(g_time_to_die[(**info)->number_of_philo_and_forks]->t_zone);
+				if (g_time_to_die[(**info)->number_of_philo_and_forks]->current_t)
+					free(g_time_to_die[(**info)->number_of_philo_and_forks]->current_t);
+				if (g_time_to_die[(**info)->number_of_philo_and_forks]->t_start)
+					free(g_time_to_die[(**info)->number_of_philo_and_forks]->t_start);
+				free(g_time_to_die[(**info)->number_of_philo_and_forks]);
+			}
 		}
-	if (*args)
+	if (args && *args)
 		free(*args);
-	if (*info)
+	if (g_time_to_die)
+		free(g_time_to_die);
+	if (info && *info && **info)
+	{
+		free(**info);
 		free(*info);
-	if (*time)
+	}
+	if (time && *time)
 	{
 		if ((*time)->t_start)
 			free((*time)->t_start);
@@ -85,6 +103,10 @@ int ft_free(t_params **info, t_timepad **time, t_args ***args, int ret)
 			free((*time)->t_zone);
 		free(*time);
 	}
+	if (g_number_of_meals)
+		free(g_number_of_meals);
+	if (g_print)
+		free(g_print);
 	return (ret);
 }
 

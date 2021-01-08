@@ -99,7 +99,7 @@ int			ft_strlen(const char *str);
 void		ft_putendl_plus_error(char *str, int flag);
 t_timepad	*start_time(void);
 void		*time_stop(t_timepad **time);
-int			ft_free(t_params **info, t_timepad **time, t_args ***args, int ret);
+int			ft_free(t_params ***info, t_timepad **time, t_args ***args, int ret);
 int 		ft_think(t_philosopher **philo, t_timepad **time);
 int 		ft_sleep(t_philosopher **philo, long ms, t_timepad **time);
 int 		ft_eat(t_philosopher **philo, long ms, t_timepad **time, pthread_mutex_t **mut);
