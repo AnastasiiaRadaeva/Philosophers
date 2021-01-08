@@ -92,6 +92,7 @@ extern int				g_error;
 extern pthread_mutex_t	*g_print;
 extern t_timepad		**g_time_to_die;
 extern int 				g_close;
+extern int 				*g_number_of_meals;
 
 long		ft_atoi(char *str, int flag);
 int			ft_strlen(const char *str);
@@ -100,8 +101,8 @@ t_timepad	*start_time(void);
 void		*time_stop(t_timepad **time);
 int			ft_free(t_params **info, t_timepad **time, t_args ***args, int ret);
 int 		ft_think(t_philosopher **philo, t_timepad **time);
-int 		ft_sleep(t_philosopher **philo, t_params **info, t_timepad **time);
-int 		ft_eat(t_philosopher **philo, t_params **info, t_timepad **time, pthread_mutex_t **mut);
+int 		ft_sleep(t_philosopher **philo, long ms, t_timepad **time);
+int 		ft_eat(t_philosopher **philo, long ms, t_timepad **time, pthread_mutex_t **mut);
 void		*philosopher(void *args);
 void		ft_putnbr(long n);
 void 		print_state(long name, t_timepad **time, char *str);

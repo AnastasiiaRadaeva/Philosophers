@@ -62,7 +62,7 @@ int	ft_think(t_philosopher **philo, t_timepad **time)
 	return (0);
 }
 
-int ft_sleep(t_philosopher **philo, t_params **info, t_timepad **time)
+int ft_sleep(t_philosopher **philo, long ms, t_timepad **time)
 {
 	(*philo)->state = sleeping;
 	pthread_mutex_lock(g_print);
@@ -72,11 +72,11 @@ int ft_sleep(t_philosopher **philo, t_params **info, t_timepad **time)
 	pthread_mutex_unlock(g_print);
 	if (g_close == 1)
 		return (unlock_ret(0, NULL, NULL));
-	usleep((*info)->time_to_sleep);
+	usleep(ms);
 	return (0);
 }
 
-int ft_eat(t_philosopher **philo, t_params **info, t_timepad **time, pthread_mutex_t **mut)
+int ft_eat(t_philosopher **philo, long ms, t_timepad **time, pthread_mutex_t **mut)
 {
 	pthread_mutex_lock(&(*mut)[(*philo)->right_fork - 1]);
 	pthread_mutex_lock(g_print);
@@ -99,7 +99,8 @@ int ft_eat(t_philosopher **philo, t_params **info, t_timepad **time, pthread_mut
 	pthread_mutex_unlock(g_print);
 	if (g_close == 1)
 		return (unlock_ret(0, &(*mut)[(*philo)->right_fork - 1], &(*mut)[(*philo)->left_fork - 1]));
-	usleep((*info)->time_to_eat);
+	usleep(ms);
+	g_number_of_meals[(*philo)->number - 1]++;
 	pthread_mutex_unlock(&(*mut)[(*philo)->right_fork - 1]);
 	pthread_mutex_unlock(&(*mut)[(*philo)->left_fork - 1]);
 	return (0);
@@ -114,9 +115,9 @@ void *philosopher(void *args)
 	{
 		if (ft_think(&arg->philo, arg->time) == 1)
 			return (NULL);
-		if (ft_eat(&arg->philo, arg->info, arg->time, arg->mut) == 1)
+		if (ft_eat(&arg->philo, (*(arg->info))->time_to_eat, arg->time, arg->mut) == 1)
 			return (NULL);
-		if (ft_sleep(&arg->philo, arg->info, arg->time) == 1)
+		if (ft_sleep(&arg->philo, (*(arg->info))->time_to_sleep, arg->time) == 1)
 			return (NULL);
 	}
 	return (NULL);
