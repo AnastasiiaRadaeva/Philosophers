@@ -59,12 +59,23 @@ long	ft_atoi(char *str, int flag)
 	return ((flag == 1 || flag == 3) ? n : n * 1000);
 }
 
-int ft_free(t_params ***info, t_timepad **time, t_args ***args, int ret)
+int ft_free(t_params ***info, /*t_timepad **time, */t_args ***args, int ret)
 {
 	if (args && *args && (*args)[0] && *((*args)[0]->mut))
 	{
 		free(*((*args)[0]->mut));
 		free(&(*((*args)[0]->mut)));
+	}
+	if (args && *args && (*args)[0] && *((*args)[0]->time))
+	{
+		if ((*((*args)[0]->time))->t_start)
+			free((*((*args)[0]->time))->t_start);
+		if ((*((*args)[0]->time))->current_t)
+			free((*((*args)[0]->time))->current_t);
+		if ((*((*args)[0]->time))->t_zone)
+			free((*((*args)[0]->time))->t_zone);
+		free(*((*args)[0]->time));
+		free(&(*((*args)[0]->time)));
 	}
 	if (info && *info)
 		while (--(**info)->number_of_philo_and_forks >= 0)
@@ -86,27 +97,17 @@ int ft_free(t_params ***info, t_timepad **time, t_args ***args, int ret)
 		}
 	if (args && *args)
 		free(*args);
-	if (g_time_to_die)
-		free(g_time_to_die);
+//	if (g_time_to_die)
+//		free(g_time_to_die);
 	if (info && *info && **info)
 	{
 		free(**info);
 		free(*info);
 	}
-	if (time && *time)
-	{
-		if ((*time)->t_start)
-			free((*time)->t_start);
-		if ((*time)->current_t)
-			free((*time)->current_t);
-		if ((*time)->t_zone)
-			free((*time)->t_zone);
-		free(*time);
-	}
-	if (g_number_of_meals)
-		free(g_number_of_meals);
-	if (g_print)
-		free(g_print);
+//	if (g_number_of_meals)
+//		free(g_number_of_meals);
+//	if (g_print)
+//		free(g_print);
 	return (ret);
 }
 

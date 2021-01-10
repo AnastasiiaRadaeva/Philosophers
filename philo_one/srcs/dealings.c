@@ -44,7 +44,9 @@ void	ft_putnbr(long n)
 
 void 	print_state(long name, t_timepad **time, char *str)
 {
-	time_stop(time);
+	long t;
+
+	time_stop(time, &t);
 	ft_putnbr((*time)->timestamp);
 	write(1, "ms ", 3);
 	ft_putnbr(name);
@@ -53,7 +55,6 @@ void 	print_state(long name, t_timepad **time, char *str)
 
 int	ft_think(t_philosopher **philo, t_timepad **time)
 {
-	(*philo)->state = thinking;
 	pthread_mutex_lock(g_print);
 	if (g_close == 1)
 		return (unlock_ret(1, NULL, NULL));
@@ -64,7 +65,6 @@ int	ft_think(t_philosopher **philo, t_timepad **time)
 
 int ft_sleep(t_philosopher **philo, long ms, t_timepad **time)
 {
-	(*philo)->state = sleeping;
 	pthread_mutex_lock(g_print);
 	if (g_close == 1)
 		return (unlock_ret(1, NULL, NULL));
@@ -92,14 +92,16 @@ int ft_eat(t_philosopher **philo, long ms, t_timepad **time, pthread_mutex_t **m
 		return (unlock_ret(1, &(*mut)[(*philo)->right_fork - 1], &(*mut)[(*philo)->left_fork - 1]));
 	print_state((*philo)->number, time, L_FORK);
 	pthread_mutex_unlock(g_print);
-	(*philo)->state = eating;
 	pthread_mutex_lock(g_print);
 	if (g_close == 1)
 		return (unlock_ret(1, &(*mut)[(*philo)->right_fork - 1], &(*mut)[(*philo)->left_fork - 1]));
 	print_state((*philo)->number, time, EAT);
 	for_free = g_time_to_die[(*philo)->number - 1];
 	g_time_to_die[(*philo)->number - 1] = start_time();
-	ft_free(NULL, &for_free, NULL, g_error);
+	free(for_free->t_start);
+	free(for_free->current_t);
+	free(for_free->t_zone);
+	free(for_free);
 	pthread_mutex_unlock(g_print);
 	if (g_close == 1)
 		return (unlock_ret(0, &(*mut)[(*philo)->right_fork - 1], &(*mut)[(*philo)->left_fork - 1]));

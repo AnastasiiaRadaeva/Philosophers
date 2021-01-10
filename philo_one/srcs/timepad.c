@@ -41,7 +41,7 @@ t_timepad	*start_time(void)
 	return (time);
 }
 
-void	*time_stop(t_timepad **time)
+void	*time_stop(t_timepad **time, long *timestamp)
 {
 	struct timeval	*difference;
 
@@ -58,7 +58,8 @@ void	*time_stop(t_timepad **time)
 		difference->tv_sec--;
 		difference->tv_usec += 1000000;
 	}
-	(*time)->timestamp = difference->tv_sec * 1000 + difference->tv_usec / 1000;
+	*timestamp = difference->tv_sec * 1000 + difference->tv_usec / 1000;
+	(*time)->timestamp = *timestamp;
 	free(difference);
 	return (NULL);
 }
