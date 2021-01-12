@@ -141,6 +141,7 @@ int	main(int argc, char *argv[])
 			{
 				free(thread);
 				ft_putendl_plus_error(PTHREAD_CR, -1, 0);
+				ft_mut_destr((*info)->number_of_philo_and_forks, args[0]);
 				return (ft_free(&info, &args, 0));
 			}
 
