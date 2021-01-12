@@ -17,26 +17,14 @@ t_timepad	*start_time(void)
 	t_timepad	*time;
 
 	if(!(time = (t_timepad *)malloc(sizeof(t_timepad))))
-	{
-		ft_putendl_plus_error(MALLOC, -1);
-		return (NULL);
-	}
+		return ((t_timepad *)ft_putendl_plus_error(MALLOC, -1, NULL));
 	if(!(time->t_start = (struct timeval *)malloc(sizeof(struct timeval))))
-	{
-		ft_putendl_plus_error(MALLOC, -1);
-		return (NULL);
-	}
+		return ((t_timepad *)ft_putendl_plus_error(MALLOC, -1, NULL));
 	if(!(time->current_t = (struct timeval *)malloc(sizeof(struct timeval))))
-	{
-		ft_putendl_plus_error(MALLOC, -1);
-		return (NULL);
-	}
+		return ((t_timepad *)ft_putendl_plus_error(MALLOC, -1, NULL));
 	time->timestamp = 0;
 	if(!(time->t_zone = (struct timezone *)malloc(sizeof(struct timezone))))
-	{
-		ft_putendl_plus_error(MALLOC, -1);
-		return (NULL);
-	}
+		return ((t_timepad *)ft_putendl_plus_error(MALLOC, -1, NULL));
 	gettimeofday(time->t_start, time->t_zone);
 	return (time);
 }
@@ -47,10 +35,7 @@ void	*time_stop(t_timepad **time, long *timestamp)
 
 	gettimeofday((*time)->current_t, (*time)->t_zone);
 	if (!(difference = (struct timeval *)malloc(sizeof(struct timeval))))
-	{
-		ft_putendl_plus_error(MALLOC, -1);
-		return (NULL);
-	}
+		return (ft_putendl_plus_error(MALLOC, -1, NULL));
 	difference->tv_sec = (*time)->current_t->tv_sec - (*time)->t_start->tv_sec;
 	difference->tv_usec = (*time)->current_t->tv_usec - (*time)->t_start->tv_usec;
 	if(difference->tv_usec < 0)

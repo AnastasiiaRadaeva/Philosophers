@@ -27,6 +27,7 @@
 # define WRONG_FORMAT "Error: wrong format of arguments (only numbers)."
 # define MALLOC "Error: malloc is failed."
 # define MUTEX_INIT "Error: initialization of mutex is failed."
+# define PTHREAD_CR "Error: thread wasn't created."
 
 # define R_FORK " has taken a right fork"
 # define L_FORK " has taken a left fork"
@@ -84,11 +85,10 @@ extern pthread_mutex_t	*g_print;
 extern t_timepad		**g_time_to_die;
 extern int 				g_close;
 extern int 				*g_number_of_meals;
-extern long 			*g_timestamp;
 
 long		ft_atoi(char *str, int flag);
 int			ft_strlen(const char *str);
-void		ft_putendl_plus_error(char *str, int flag);
+void		*ft_putendl_plus_error(char *str, int flag, void *ret);
 t_timepad	*start_time(void);
 void		*time_stop(t_timepad **time, long *timestamp);
 int			ft_free(t_params ***info,/* t_timepad **time, */t_args ***args, int ret);
@@ -99,6 +99,8 @@ void		*philosopher(void *args);
 void		ft_putnbr(long n);
 void 		print_state(long name, t_timepad **time, char *str);
 int			unlock_ret(int flag, pthread_mutex_t *mut_1, pthread_mutex_t *mut_2);
+void 		ft_mut_destr(long number, t_args *args);
+long 		ft_g_init(long number);
 
 
 #endif

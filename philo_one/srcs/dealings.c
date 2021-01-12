@@ -23,8 +23,6 @@ int unlock_ret(int flag, pthread_mutex_t *mut_1, pthread_mutex_t *mut_2)
 	return (1);
 }
 
-//каждому дейсвию поставить сообщение и сделать глобальную переменную, которая не даст сразу всем процессам печатать свое состояние.
-
 void	ft_putnbr(long n)
 {
 	char	c;
@@ -50,7 +48,7 @@ void 	print_state(long name, t_timepad **time, char *str)
 	ft_putnbr((*time)->timestamp);
 	write(1, "ms ", 3);
 	ft_putnbr(name);
-	ft_putendl_plus_error(str, g_error);
+	ft_putendl_plus_error(str, g_error, NULL);
 }
 
 int	ft_think(t_philosopher **philo, t_timepad **time)

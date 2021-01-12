@@ -22,11 +22,12 @@ int	ft_strlen(const char *s)
 	return (len);
 }
 
-void	ft_putendl_plus_error(char *str, int flag)
+void	*ft_putendl_plus_error(char *str, int flag, void *ret)
 {
 	write(1, str, ft_strlen(str));
 	write(1, "\n", 1);
 	g_error = flag;
+	return (ret);
 }
 
 long	ft_atoi(char *str, int flag)
@@ -39,27 +40,24 @@ long	ft_atoi(char *str, int flag)
 	while ((str[index] >= 9 && str[index] <= 13) || str[index] == 32)
 		index++;
 	if (str[index] == '-')
-	{
-		ft_putendl_plus_error(WRONG_RANGE, -1);
-		index++;
-	}
+		return ((long)ft_putendl_plus_error(WRONG_RANGE, -1, (void *)-1));
 	if (str[index] == '+')
 		index++;
 	while (str[index] >= '0' && str[index] <= '9')
 	{
 		n = (n * 10 + (str[index] - '0'));
 		if (n > 2147483647)
-			ft_putendl_plus_error(WRONG_RANGE, -1);
+			return ((long)ft_putendl_plus_error(WRONG_RANGE, -1, (void *)-1));
 		else if ((n > 200 || n < 2) && flag == 1)
-			ft_putendl_plus_error(NUM_OF_PH, -1);
+			return ((long)ft_putendl_plus_error(NUM_OF_PH, -1, (void *)-1));
 		index++;
 	}
 	if (index != ft_strlen(str))
-		ft_putendl_plus_error(WRONG_FORMAT, -1);
+		return ((long)ft_putendl_plus_error(WRONG_FORMAT, -1, (void *)-1));
 	return ((flag == 1 || flag == 3) ? n : n * 1000);
 }
 
-int ft_free(t_params ***info, /*t_timepad **time, */t_args ***args, int ret)
+int ft_free(t_params ***info, t_args ***args, int ret)
 {
 	if (args && *args && (*args)[0] && *((*args)[0]->mut))
 	{
@@ -109,5 +107,35 @@ int ft_free(t_params ***info, /*t_timepad **time, */t_args ***args, int ret)
 //	if (g_print)
 //		free(g_print);
 	return (ret);
+}
+
+void ft_mut_destr(long number, t_args *args)
+{
+	long i;
+
+	i = -1;
+	while (++i < number)
+		pthread_mutex_destroy(&(*(args->mut))[i]);
+	pthread_mutex_destroy(g_print);
+}
+
+long		ft_g_init(long number)
+{
+	long	i;
+
+	i = -1;
+	if(!(g_number_of_meals = (int *)malloc(sizeof(int) * number)))
+		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
+	while (++i < number)
+		g_number_of_meals[i] = 0;
+	if (!(g_print = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t))))
+		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
+	if (!(g_time_to_die = (t_timepad **)malloc(sizeof(t_timepad *) * number)))
+		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
+	i = -1;
+	while (++i < number)
+		if (!(g_time_to_die[i] = start_time()))
+			return (1);
+	return (0);
 }
 
