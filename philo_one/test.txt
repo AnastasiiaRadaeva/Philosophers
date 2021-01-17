@@ -1,0 +1,183 @@
+0ms 1 is thinking
+0ms 1 has taken a left fork
+0ms 1 has taken a right fork
+0ms 1 is eating
+0ms 2 is thinking
+0ms 3 is thinking
+0ms 3 has taken a left fork
+0ms 3 has taken a right fork
+0ms 3 is eating
+0ms 4 is thinking
+0ms 5 is thinking
+0ms 5 has taken a left fork
+200ms 1 is sleeping
+200ms 2 has taken a left fork
+200ms 5 has taken a right fork
+200ms 5 is eating
+200ms 3 is sleeping
+200ms 2 has taken a right fork
+200ms 2 is eating
+200ms 4 has taken a left fork
+400ms 1 is thinking
+400ms 1 has taken a left fork
+400ms 5 is sleeping
+400ms 4 has taken a right fork
+400ms 4 is eating
+400ms 3 is thinking
+400ms 3 has taken a left fork
+400ms 2 is sleeping
+400ms 1 has taken a right fork
+400ms 1 is eating
+600ms 5 is thinking
+600ms 5 has taken a left fork
+600ms 4 is sleeping
+600ms 3 has taken a right fork
+600ms 3 is eating
+600ms 2 is thinking
+600ms 1 is sleeping
+600ms 2 has taken a left fork
+600ms 5 has taken a right fork
+600ms 5 is eating
+801ms 4 is thinking
+801ms 4 has taken a left fork
+801ms 3 is sleeping
+801ms 2 has taken a right fork
+801ms 2 is eating
+801ms 1 is thinking
+801ms 5 is sleeping
+801ms 4 has taken a right fork
+801ms 4 is eating
+801ms 1 has taken a left fork
+1000ms 3 is thinking
+1000ms 3 has taken a left fork
+1000ms 1 has taken a right fork
+1000ms 1 is eating
+1000ms 2 is sleeping
+1000ms 5 is thinking
+1000ms 4 is sleeping
+1001ms 3 has taken a right fork
+1001ms 3 is eating
+1001ms 5 has taken a left fork
+1200ms 1 is sleeping
+1200ms 5 has taken a right fork
+1201ms 5 is eating
+1201ms 2 is thinking
+1201ms 2 has taken a left fork
+1201ms 4 is thinking
+1201ms 3 is sleeping
+1201ms 4 has taken a left fork
+1201ms 2 has taken a right fork
+1201ms 2 is eating
+1401ms 1 is thinking
+1401ms 1 has taken a left fork
+1401ms 5 is sleeping
+1401ms 4 has taken a right fork
+1401ms 4 is eating
+1401ms 3 is thinking
+1401ms 2 is sleeping
+1401ms 1 has taken a right fork
+1401ms 1 is eating
+1401ms 3 has taken a left fork
+1601ms 5 is thinking
+1601ms 3 has taken a right fork
+1601ms 3 is eating
+1601ms 4 is sleeping
+1601ms 5 has taken a left fork
+1601ms 2 is thinking
+1601ms 1 is sleeping
+1601ms 2 has taken a left fork
+1601ms 5 has taken a right fork
+1601ms 5 is eating
+1802ms 3 is sleeping
+1802ms 4 is thinking
+1802ms 1 is thinking
+1802ms 4 has taken a left fork
+1802ms 2 has taken a right fork
+1802ms 2 is eating
+1802ms 5 is sleeping
+1802ms 4 has taken a right fork
+1802ms 4 is eating
+1802ms 1 has taken a left fork
+2001ms 3 is thinking
+2001ms 2 is sleeping
+2001ms 5 is thinking
+2001ms 1 has taken a right fork
+2001ms 1 is eating
+2001ms 3 has taken a left fork
+2001ms 3 has taken a right fork
+2001ms 3 is eating
+2001ms 4 is sleeping
+2001ms 5 has taken a left fork
+2201ms 2 is thinking
+2201ms 1 is sleeping
+2201ms 2 has taken a left fork
+2201ms 5 has taken a right fork
+2201ms 5 is eating
+2202ms 2 has taken a right fork
+2202ms 2 is eating
+2202ms 4 is thinking
+2202ms 4 has taken a left fork
+2202ms 3 is sleeping
+2401ms 1 is thinking
+2402ms 1 has taken a left fork
+2402ms 5 is sleeping
+2402ms 2 is sleeping
+2402ms 1 has taken a right fork
+2402ms 1 is eating
+2402ms 4 has taken a right fork
+2402ms 4 is eating
+2402ms 3 is thinking
+2402ms 3 has taken a left fork
+2602ms 5 is thinking
+2602ms 2 is thinking
+2602ms 1 is sleeping
+2602ms 2 has taken a left fork
+2602ms 3 has taken a right fork
+2602ms 3 is eating
+2602ms 5 has taken a left fork
+2602ms 5 has taken a right fork
+2602ms 5 is eating
+2602ms 4 is sleeping
+2803ms 1 is thinking
+2803ms 3 is sleeping
+2803ms 2 has taken a right fork
+2803ms 2 is eating
+2803ms 5 is sleeping
+2803ms 1 has taken a left fork
+2803ms 4 is thinking
+2803ms 4 has taken a left fork
+2803ms 4 has taken a right fork
+2803ms 4 is eating
+3002ms 3 is thinking
+3002ms 5 is thinking
+3002ms 1 has taken a right fork
+3002ms 1 is eating
+3002ms 2 is sleeping
+3002ms 3 has taken a left fork
+3002ms 3 has taken a right fork
+3002ms 3 is eating
+3002ms 4 is sleeping
+3002ms 5 has taken a left fork
+3202ms 1 is sleeping
+3202ms 5 has taken a right fork
+3202ms 5 is eating
+3202ms 2 is thinking
+3202ms 2 has taken a left fork
+3202ms 3 is sleeping
+3202ms 2 has taken a right fork
+3202ms 2 is eating
+3203ms 4 is thinking
+3203ms 4 has taken a left fork
+3402ms 1 is thinking
+3402ms 1 has taken a left fork
+3402ms 5 is sleeping
+3402ms 4 has taken a right fork
+3403ms 4 is eating
+3403ms 3 is thinking
+3403ms 2 is sleeping
+3403ms 1 has taken a right fork
+3403ms 1 is eating
+3403ms 3 has taken a left fork
+3603ms 5 is thinking
+Every philosopher has eaten enough times
+

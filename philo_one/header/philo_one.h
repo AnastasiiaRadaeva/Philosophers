@@ -36,6 +36,8 @@
 # define THINK " is thinking"
 # define DEATH " died"
 
+# define GLOBAL_ON 1
+
 typedef struct 		s_params
 {
 	long			number_of_philo_and_forks;
@@ -75,7 +77,6 @@ typedef struct		s_timepad
 typedef struct		s_args
 {
 	t_philosopher	*philo;
-	pthread_mutex_t	**mut;
 	t_params		**info;
 	t_timepad		**time;
 }					t_args;
@@ -85,6 +86,8 @@ extern pthread_mutex_t	*g_print;
 extern t_timepad		**g_time_to_die;
 extern int 				g_close;
 extern int 				*g_number_of_meals;
+extern pthread_mutex_t	**g_fork;
+extern pthread_mutex_t	*g_w;
 
 long		ft_atoi(char *str, int flag);
 int			ft_strlen(const char *str);
@@ -92,15 +95,12 @@ void		*ft_putendl_plus_error(char *str, int flag, void *ret);
 t_timepad	*start_time(void);
 void		*time_stop(t_timepad **time, long *timestamp);
 int			ft_free(t_params ***info,/* t_timepad **time, */t_args ***args, int ret);
-int 		ft_think(t_philosopher **philo, t_timepad **time);
-int 		ft_sleep(t_philosopher **philo, long ms, t_timepad **time);
-int 		ft_eat(t_philosopher **philo, long ms, t_timepad **time, pthread_mutex_t **mut);
 void		*philosopher(void *args);
-void		ft_putnbr(long n);
-void 		print_state(long name, t_timepad **time, char *str);
-int			unlock_ret(int flag, pthread_mutex_t *mut_1, pthread_mutex_t *mut_2);
+int 		print_state(long name, t_timepad **time, char *str, int flag);
+int			unlock_ret(int flag, pthread_mutex_t *mut_1, pthread_mutex_t *mut_2, pthread_mutex_t *mut_3);
 void 		ft_mut_destr(long number, t_args *args);
 long 		ft_g_init(long number);
-
+int 		take_forks(int left_fork, int right_fork, long number, t_timepad **time);
+void		reset_time(int number);
 
 #endif

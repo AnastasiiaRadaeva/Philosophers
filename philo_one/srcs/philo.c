@@ -17,6 +17,8 @@ int				g_close = 0;
 int 			*g_number_of_meals = NULL;
 pthread_mutex_t	*g_print = NULL;
 t_timepad		**g_time_to_die = NULL;
+pthread_mutex_t **g_fork = NULL;
+pthread_mutex_t *g_w = NULL;
 
 t_params	**init_params(char **args, int argc)
 {
@@ -56,7 +58,7 @@ t_philosopher	*init_philo(long number, long index)
 
 t_args	**init_args(long number, t_params **info)
 {
-	pthread_mutex_t	**mut;
+//	pthread_mutex_t	**mut;
 	long 			index;
 	t_args			**args;
 	t_timepad		**time;
@@ -68,13 +70,13 @@ t_args	**init_args(long number, t_params **info)
 		return ((t_args **)ft_putendl_plus_error(MALLOC, -1, NULL));
 	if (!(*time = start_time()))
 		return (NULL);
-	if (!(mut = (pthread_mutex_t **)malloc(sizeof(pthread_mutex_t *))))
-		return ((t_args **)ft_putendl_plus_error(MALLOC, -1, NULL));
-	if (!(*mut = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * number)))
-		return ((t_args **)ft_putendl_plus_error(MALLOC, -1, NULL));
-	while (++index < number)
-		if (pthread_mutex_init(&(*mut)[index], NULL))
-			return ((t_args **)ft_putendl_plus_error(MUTEX_INIT, -1, NULL));
+//	if (!(mut = (pthread_mutex_t **)malloc(sizeof(pthread_mutex_t *))))
+//		return ((t_args **)ft_putendl_plus_error(MALLOC, -1, NULL));
+//	if (!(*mut = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * number)))
+//		return ((t_args **)ft_putendl_plus_error(MALLOC, -1, NULL));
+//	while (++index < number)
+//		if (pthread_mutex_init(&(*mut)[index], NULL))
+//			return ((t_args **)ft_putendl_plus_error(MUTEX_INIT, -1, NULL));
 	index = -1;
 	if (!(args = (t_args **)malloc(sizeof(t_args *) * number)))
 		return ((t_args **)ft_putendl_plus_error(MALLOC, -1, NULL));
@@ -83,7 +85,7 @@ t_args	**init_args(long number, t_params **info)
 		if (!(args[index] = (t_args *)malloc(sizeof(t_args))))
 			return ((t_args **)ft_putendl_plus_error(MALLOC, -1, NULL));
 		args[index]->philo = init_philo(number, index);
-		args[index]->mut = mut;
+//		args[index]->mut = mut;
 		args[index]->info = info;
 		args[index]->time = time;
 	}
@@ -105,24 +107,23 @@ int	main(int argc, char *argv[])
 	char **array;
 	array = malloc(sizeof(char *) * 6);
 	array[0] = "2";
-	array[1] = "3";
-	array[2] = "7900";
-	array[3] = "500";
+	array[1] = "4";
+	array[2] = "410";
+	array[3] = "200";
 	array[4] = "200";
-	array[5] = "5";
+	array[5] = "7";
 	if (argc == 1)
 /**/
 	{
-/**/	argc = 6;
+/**/    argc = 5;
 
 
 		if (!(info = init_params(array, argc)))
 			return (ft_free(&info, &args, 0));
-/**/	free(array);
+/**/    free(array);
 		if (ft_g_init((*info)->number_of_philo_and_forks) == 1)
 			return (ft_free(&info, &args, 0));
-		if (!(thread = (pthread_t *)malloc((sizeof(pthread_t) * (*info)->number_of_philo_and_forks))))
-		{
+		if (!(thread = (pthread_t *) malloc((sizeof(pthread_t) * (*info)->number_of_philo_and_forks)))) {
 			ft_putendl_plus_error(MALLOC, -1, 0);
 			return (ft_free(&info, &args, 0));
 		}
@@ -130,13 +131,25 @@ int	main(int argc, char *argv[])
 			return (ft_free(&info, &args, 0));
 
 
-		if (pthread_mutex_init(g_print, NULL))
-		{
+		if (pthread_mutex_init(g_print, NULL)) {
+			ft_putendl_plus_error(MUTEX_INIT, -1, 0);
+			return (ft_free(&info, &args, 0));
+		}
+		if (pthread_mutex_init(g_w, NULL)) {
 			ft_putendl_plus_error(MUTEX_INIT, -1, 0);
 			return (ft_free(&info, &args, 0));
 		}
 		i = -1;
 		while (++i < (*info)->number_of_philo_and_forks)
+		{
+			if (pthread_mutex_init(g_fork[i], NULL)) {
+				ft_putendl_plus_error(MUTEX_INIT, -1, 0);
+				return (ft_free(&info, &args, 0));
+			}
+		}
+		i = -1;
+		while (++i < (*info)->number_of_philo_and_forks)
+		{
 			if (pthread_create(&thread[i], NULL, philosopher, args[i]))
 			{
 				free(thread);
@@ -144,24 +157,28 @@ int	main(int argc, char *argv[])
 				ft_mut_destr((*info)->number_of_philo_and_forks, args[0]);
 				return (ft_free(&info, &args, 0));
 			}
+			usleep(10);
+		}
 
 
 		i = 0;
 		long number_of_philo_who_ate = 0;
-		while ((args[i]->philo->timestamp < (((*info)->time_to_die) / 1000)) && (number_of_philo_who_ate < (*info)->number_of_philo_and_forks))
+		while ((args[i]->philo->timestamp <= (((*info)->time_to_die) / 1000)) && (number_of_philo_who_ate < (*info)->number_of_philo_and_forks))
 		{
 			if (i == (*info)->number_of_philo_and_forks - 1)
 				i = 0;
 			else
 				i++;
+			pthread_mutex_lock(g_w);
 			time_stop(&(g_time_to_die[i]), &(args[i]->philo->timestamp));
+			pthread_mutex_unlock(g_w);
 			if (argc == 6)
 			{
 				int c = -1;
 				number_of_philo_who_ate = 0;
 				while (++c < (*info)->number_of_philo_and_forks)
 				{
-					if (g_number_of_meals[c] == (*info)->number_of_times_each_philo_must_eat)
+					if (g_number_of_meals[c] >= (*info)->number_of_times_each_philo_must_eat)
 						number_of_philo_who_ate++;
 				}
 			}
@@ -169,7 +186,7 @@ int	main(int argc, char *argv[])
 		pthread_mutex_lock(g_print);
 		g_close = 1;
 		if (number_of_philo_who_ate < (*info)->number_of_philo_and_forks)
-			print_state(args[i]->philo->number, args[0]->time, DEATH);
+			print_state(args[i]->philo->number, args[0]->time, DEATH, 0);
 		else
 			ft_putendl_plus_error("Every philosopher has eaten enough times\n", g_error, 0);
 		pthread_mutex_unlock(g_print);

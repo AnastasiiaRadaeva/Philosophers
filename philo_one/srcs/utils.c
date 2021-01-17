@@ -48,7 +48,7 @@ long	ft_atoi(char *str, int flag)
 		n = (n * 10 + (str[index] - '0'));
 		if (n > 2147483647)
 			return ((long)ft_putendl_plus_error(WRONG_RANGE, -1, (void *)-1));
-		else if ((n > 200 || n < 2) && flag == 1)
+		else if ((n > 200 || n < 1) && flag == 1) ///////////////////////////////////////////////////////
 			return ((long)ft_putendl_plus_error(NUM_OF_PH, -1, (void *)-1));
 		index++;
 	}
@@ -59,11 +59,6 @@ long	ft_atoi(char *str, int flag)
 
 int ft_free(t_params ***info, t_args ***args, int ret)
 {
-	if (args && *args && (*args)[0] && *((*args)[0]->mut))
-	{
-		free(*((*args)[0]->mut));
-		free(&(*((*args)[0]->mut)));
-	}
 	if (args && *args && (*args)[0] && *((*args)[0]->time))
 	{
 		if ((*((*args)[0]->time))->t_start)
@@ -113,10 +108,12 @@ void ft_mut_destr(long number, t_args *args)
 {
 	long i;
 
+	(void)args;
 	i = -1;
 	while (++i < number)
-		pthread_mutex_destroy(&(*(args->mut))[i]);
+		pthread_mutex_destroy(g_fork[i]);
 	pthread_mutex_destroy(g_print);
+	pthread_mutex_destroy(g_w);
 }
 
 long		ft_g_init(long number)
@@ -130,12 +127,20 @@ long		ft_g_init(long number)
 		g_number_of_meals[i] = 0;
 	if (!(g_print = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t))))
 		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
+	if (!(g_w = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t))))
+		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
 	if (!(g_time_to_die = (t_timepad **)malloc(sizeof(t_timepad *) * number)))
 		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
 	i = -1;
 	while (++i < number)
 		if (!(g_time_to_die[i] = start_time()))
 			return (1);
+	if (!(g_fork = (pthread_mutex_t **)malloc(sizeof(pthread_mutex_t *) * number)))
+		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
+	i = -1;
+	while (++i < number)
+		if (!(g_fork[i] = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t))))
+			return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
 	return (0);
 }
 

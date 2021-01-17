@@ -22,6 +22,8 @@ t_timepad	*start_time(void)
 		return ((t_timepad *)ft_putendl_plus_error(MALLOC, -1, NULL));
 	if(!(time->current_t = (struct timeval *)malloc(sizeof(struct timeval))))
 		return ((t_timepad *)ft_putendl_plus_error(MALLOC, -1, NULL));
+	time->current_t->tv_usec = 0;
+	time->current_t->tv_sec = 0;
 	time->timestamp = 0;
 	if(!(time->t_zone = (struct timezone *)malloc(sizeof(struct timezone))))
 		return ((t_timepad *)ft_putendl_plus_error(MALLOC, -1, NULL));
@@ -38,11 +40,11 @@ void	*time_stop(t_timepad **time, long *timestamp)
 		return (ft_putendl_plus_error(MALLOC, -1, NULL));
 	difference->tv_sec = (*time)->current_t->tv_sec - (*time)->t_start->tv_sec;
 	difference->tv_usec = (*time)->current_t->tv_usec - (*time)->t_start->tv_usec;
-	if(difference->tv_usec < 0)
-	{
-		difference->tv_sec--;
-		difference->tv_usec += 1000000;
-	}
+//	if(difference->tv_usec < 0)
+//	{
+//		difference->tv_sec--;
+//		difference->tv_usec += 1000000;
+//	}
 	*timestamp = difference->tv_sec * 1000 + difference->tv_usec / 1000;
 	(*time)->timestamp = *timestamp;
 	free(difference);
