@@ -45,14 +45,8 @@ static void	free_global(void)
 {
 	if (g_number_of_meals)
 		free(g_number_of_meals);
-//	if (g_print)
-//		free(g_print);
-//	if (g_check_time)
-//		free(g_check_time);
 	if (g_time_to_die)
 		free(g_time_to_die);
-//	if (g_forks)
-//		free(g_forks);
 }
 
 int			ft_free(t_params ***info, t_args ***args, int ret)
@@ -89,4 +83,6 @@ void		ft_sem_destr(void)
 	sem_unlink(S_CHECK_TIME);
 	sem_close(g_forks);
 	sem_unlink(S_FORKS);
+	sem_close(g_two_forks);
+	sem_unlink(S_TWO_FORKS);
 }

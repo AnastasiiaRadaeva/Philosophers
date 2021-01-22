@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbatwoma <kbatwoma@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/28 19:26:57 by kbatwoma          #+#    #+#             */
+/*   Created: 2021/01/17 19:26:57 by kbatwoma          #+#    #+#             */
 /*   Updated: 2021/01/17 22:51:56 by kbatwoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -17,6 +17,7 @@ int				g_close = 0;
 int				*g_number_of_meals = NULL;
 sem_t			*g_print = NULL;
 sem_t			*g_forks = NULL;
+sem_t			*g_two_forks = NULL;
 sem_t			*g_check_time = NULL;
 t_timepad		**g_time_to_die = NULL;
 

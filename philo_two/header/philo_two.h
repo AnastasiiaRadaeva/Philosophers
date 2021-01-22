@@ -26,7 +26,7 @@
 # define WRONG_RANGE "Error: you use wrong range (use 0 - 2 147 483)."
 # define WRONG_FORMAT "Error: wrong format of arguments (only numbers)."
 # define MALLOC "Error: malloc is failed."
-# define MUTEX_INIT "Error: initialization of mutex is failed."
+# define SEMAPHORE_INIT "Error: initialization of semaphore is failed."
 # define PTHREAD_CR "Error: thread wasn't created."
 
 # define F_FORK " has taken a first fork"
@@ -39,6 +39,7 @@
 # define S_PRINT "/print"
 # define S_CHECK_TIME "/check_time"
 # define S_FORKS "/forks"
+# define S_TWO_FORKS "/two_forks"
 
 # define GLOBAL_ON 1
 
@@ -78,6 +79,7 @@ extern t_timepad		**g_time_to_die;
 extern int				g_close;
 extern int				*g_number_of_meals;
 extern sem_t			*g_forks;
+extern sem_t			*g_two_forks;
 extern sem_t			*g_check_time;
 
 int						initialization(t_params **info, t_args ***args,

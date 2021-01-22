@@ -71,15 +71,16 @@ void		reset_time(int number)
 
 int			take_forks(long number, t_timepad **time)
 {
+	sem_wait(g_two_forks);
 	sem_wait(g_forks);
 	sem_wait(g_print);
 	if (print_state(number, time, F_FORK, GLOBAL_ON) == 1)
 		return (unlock_ret(1, 1, 0));
 	sem_post(g_print);
 	sem_wait(g_forks);
+	sem_post(g_two_forks);
 	sem_wait(g_print);
 	if (print_state(number, time, S_FORK, GLOBAL_ON) == 1)
 		return (unlock_ret(1, 2, 1));
-//	sem_post(g_print);
 	return (0);
 }

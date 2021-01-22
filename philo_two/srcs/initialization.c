@@ -6,35 +6,11 @@
 /*   By: kbatwoma <kbatwoma@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 18:26:57 by kbatwoma          #+#    #+#             */
-/*   Updated: 2021/01/17 22:53:56 by kbatwoma         ###   ########.fr       */
+/*   Updated: 2021/01/22 22:53:56 by kbatwoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
-
-int						ft_sem_init(long number)
-{
-	sem_unlink(S_PRINT);
-	if ((g_print = sem_open(S_PRINT, O_CREAT, O_RDWR, 1)) == SEM_FAILED)
-		return ((int)(ft_putendl_plus_error(MUTEX_INIT, -1, (void *)1)));
-	sem_unlink(S_CHECK_TIME);
-	if ((g_check_time = sem_open(S_CHECK_TIME, O_CREAT, O_RDWR, 1)) == SEM_FAILED)
-	{
-		sem_close(g_print);
-		sem_unlink(S_PRINT);
-		return ((int)(ft_putendl_plus_error(MUTEX_INIT, -1, (void *)1)));
-	}
-	sem_unlink(S_FORKS);
-	if ((g_forks = sem_open(S_FORKS, O_CREAT, O_RDWR, number)) == SEM_FAILED)
-	{
-		sem_close(g_print);
-		sem_unlink(S_PRINT);
-		sem_close(g_check_time);
-		sem_unlink(S_CHECK_TIME);
-		return ((int)(ft_putendl_plus_error(MUTEX_INIT, -1, (void *)1)));
-	}
-	return (0);
-}
 
 long					ft_g_init(long number)
 {
@@ -45,18 +21,12 @@ long					ft_g_init(long number)
 		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
 	while (++i < number)
 		g_number_of_meals[i] = 0;
-//	if (!(g_print = (sem_t *)malloc(sizeof(sem_t))))
-//		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
-//	if (!(g_check_time = (sem_t *)malloc(sizeof(sem_t))))
-//		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
 	if (!(g_time_to_die = (t_timepad **)malloc(sizeof(t_timepad *) * number)))
 		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
 	i = -1;
 	while (++i < number)
 		if (!(g_time_to_die[i] = start_time()))
 			return (1);
-//	if (!(g_forks = (sem_t *)malloc(sizeof(sem_t))))
-//		return ((long)ft_putendl_plus_error(MALLOC, -1, (void *)1));
 	return (0);
 }
 
@@ -101,7 +71,6 @@ t_args					**init_args(long number, t_params ***info)
 	t_args			**args;
 	t_timepad		**time;
 
-	index = -1;
 	if (number < 1)
 		return (NULL);
 	if (!(time = (t_timepad **)malloc(sizeof(t_timepad *))))

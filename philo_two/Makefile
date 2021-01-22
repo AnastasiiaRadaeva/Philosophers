@@ -18,6 +18,7 @@ SRCS_DIR    = 	srcs/
 SRCS_LIST   =	philo.c\
 				philo_inside.c\
 				initialization.c\
+				init_sem.c\
 				utils.c\
 				timepad.c\
 				dealings.c\

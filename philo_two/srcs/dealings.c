@@ -37,7 +37,6 @@ static int	ft_eat(t_philosopher **philo, long ms, t_timepad **time)
 {
 	if (take_forks((*philo)->number, time) == 1)
 		return (1);
-//	sem_wait(g_print);
 	if (print_state((*philo)->number, time, EAT, GLOBAL_ON) == 1)
 		return (unlock_ret(1, 2, 0));
 	sem_post(g_print);
