@@ -28,7 +28,7 @@
 # define WRONG_RANGE "Error: you use wrong range (use 0 - 2 147 483)."
 # define WRONG_FORMAT "Error: wrong format of arguments (only numbers)."
 # define MALLOC "Error: malloc is failed."
-# define MUTEX_INIT "Error: initialization of mutex is failed."
+# define SEMAPHORE_INIT "Error: initialization of semaphore is failed."
 # define PTHREAD_CR "Error: thread wasn't created."
 # define PROCESS_CR "Error: process wasn't created."
 # define SIGNAL "Error: don't use signal."

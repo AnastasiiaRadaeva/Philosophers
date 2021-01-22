@@ -16,13 +16,13 @@ int						ft_sem_init(long number)
 {
 	sem_unlink(S_PRINT);
 	if ((g_print = sem_open(S_PRINT, O_CREAT, O_RDWR, 1)) == SEM_FAILED)
-		ft_putendl_plus_error(MUTEX_INIT, FAILURE);
+		ft_putendl_plus_error(SEMAPHORE_INIT, FAILURE);
 	sem_unlink(S_CHECK_TIME);
 	if ((g_check_time = sem_open(S_CHECK_TIME, O_CREAT, O_RDWR, 1)) == SEM_FAILED)
 	{
 		sem_close(g_print);
 		sem_unlink(S_PRINT);
-		ft_putendl_plus_error(MUTEX_INIT, FAILURE);
+		ft_putendl_plus_error(SEMAPHORE_INIT, FAILURE);
 	}
 	sem_unlink(S_FORKS);
 	if ((g_forks = sem_open(S_FORKS, O_CREAT, O_RDWR, number)) == SEM_FAILED)
@@ -31,7 +31,7 @@ int						ft_sem_init(long number)
 		sem_unlink(S_PRINT);
 		sem_close(g_check_time);
 		sem_unlink(S_CHECK_TIME);
-		ft_putendl_plus_error(MUTEX_INIT, FAILURE);
+		ft_putendl_plus_error(SEMAPHORE_INIT, FAILURE);
 	}
 	sem_unlink(S_TWO_FORKS);
 	if ((g_two_fork = sem_open(S_TWO_FORKS, O_CREAT, O_RDWR, 1)) == SEM_FAILED)
@@ -42,7 +42,7 @@ int						ft_sem_init(long number)
 		sem_unlink(S_CHECK_TIME);
 		sem_close(g_forks);
 		sem_unlink(S_FORKS);
-		ft_putendl_plus_error(MUTEX_INIT, FAILURE);
+		ft_putendl_plus_error(SEMAPHORE_INIT, FAILURE);
 	}
 	return (0);
 }
