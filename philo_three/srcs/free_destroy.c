@@ -66,16 +66,16 @@ int			ft_free(t_params ***info, t_args **args, pid_t **pid, int ret)
 
 void		ft_sem_destr(void)
 {
-	sem_post(g_print);
+//	sem_post(g_print);
 	sem_close(g_print);
 	sem_unlink(S_PRINT);
-	sem_post(g_check_time);
+//	sem_post(g_check_time);
 	sem_close(g_check_time);
 	sem_unlink(S_CHECK_TIME);
-	sem_post(g_forks);
+//	sem_post(g_forks);
 	sem_close(g_forks);
 	sem_unlink(S_FORKS);
-	sem_post(g_two_fork);
+//	sem_post(g_two_fork);
 	sem_close(g_two_fork);
 	sem_unlink(S_TWO_FORKS);
 }

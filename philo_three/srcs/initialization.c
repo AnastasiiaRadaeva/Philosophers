@@ -49,14 +49,14 @@ int						ft_sem_init(long number)
 
 long					ft_g_init(void)
 {
-	if (!(g_print = (sem_t *)malloc(sizeof(sem_t))))
-		ft_putendl_plus_error(MALLOC, FAILURE);
-	if (!(g_check_time = (sem_t *)malloc(sizeof(sem_t))))
-		ft_putendl_plus_error(MALLOC, FAILURE);
-	if (!(g_forks = (sem_t *)malloc(sizeof(sem_t))))
-		ft_putendl_plus_error(MALLOC, FAILURE);
-	if (!(g_two_fork = (sem_t *)malloc(sizeof(sem_t))))
-		ft_putendl_plus_error(MALLOC, FAILURE);
+//	if (!(g_print = (sem_t *)malloc(sizeof(sem_t))))
+//		ft_putendl_plus_error(MALLOC, FAILURE);
+//	if (!(g_check_time = (sem_t *)malloc(sizeof(sem_t))))
+//		ft_putendl_plus_error(MALLOC, FAILURE);
+//	if (!(g_forks = (sem_t *)malloc(sizeof(sem_t))))
+//		ft_putendl_plus_error(MALLOC, FAILURE);
+//	if (!(g_two_fork = (sem_t *)malloc(sizeof(sem_t))))
+//		ft_putendl_plus_error(MALLOC, FAILURE);
 	g_time_to_die = start_time();
 	return (0);
 }

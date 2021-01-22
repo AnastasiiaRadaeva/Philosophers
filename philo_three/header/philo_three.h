@@ -87,7 +87,7 @@ extern sem_t			*g_two_fork;
 
 int						initialization(t_params **info, t_args **args);
 void					check_term_conditions(t_args **args, t_params **info);
-void 					create_thread(t_args *args);
+void 					create_thread(t_args *args, pthread_t **thread);
 int						waiting_for_processes(t_params **info, pid_t **pid);
 
 t_params				**init_params(char **args, int argc);

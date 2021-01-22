@@ -19,28 +19,25 @@ sem_t			*g_two_fork = NULL;
 sem_t			*g_check_time = NULL;
 t_timepad		*g_time_to_die = NULL;
 
-void	create_thread(t_args *args)
+void	create_thread(t_args *args, pthread_t **thread)
 {
-	pthread_t	*thread;
-
-	if (!(thread = (pthread_t *)malloc(sizeof(pthread_t))))
+	if (!(*thread = (pthread_t *)malloc(sizeof(pthread_t))))
 		ft_putendl_plus_error(MALLOC, FAILURE);
-	if (pthread_create(thread, NULL, philosopher, args))
+	if (pthread_create(*thread, NULL, philosopher, args))
 	{
 		ft_sem_destr();
 		ft_putendl_plus_error(PTHREAD_CR, FAILURE);
 	}
 }
 
-void ft_process(t_args **args, long number_of_philo)
+void ft_process(t_args **args, long number_of_philo, pthread_t **thread)
 {
 	(*args)->number_of_philo = number_of_philo;
-	create_thread(*args);
-//	philosopher(*args);
+	create_thread(*args, thread);
 	check_term_conditions(args, (*args)->info);
 }
 
-void create_processes(pid_t **pid, t_params **info, t_args **args)
+void create_processes(pid_t **pid, t_params **info, t_args **args, pthread_t **thread)
 {
 	long i;
 
@@ -51,7 +48,7 @@ void create_processes(pid_t **pid, t_params **info, t_args **args)
 		if ((*pid)[i] < 0)
 			ft_putendl_plus_error(PROCESS_CR, FAILURE);
 		else if ((*pid)[i] == 0)
-			ft_process(args, i + 1);
+			ft_process(args, i + 1, thread);
 	}
 }
 
@@ -60,31 +57,20 @@ int				main(int argc, char *argv[])
 	t_params	**info;
 	t_args		*args;
 	pid_t		*pid;
+	pthread_t 	*thread;
 
 	info = NULL;
 	args = NULL;
 	pid = NULL;
+	thread = NULL;
 
-//	if (argc == 1)
-//	{
-//		(void)argv;
-//		char *array[6];
-//
-//		array[0] = "a";
-//		array[1] = "2";
-//		array[2] = "500";
-//		array[3] = "100";
-//		array[4] = "100";
-//		array[5] = "2";
-//
-//		argc = 5;
 	if (argc == 5 || argc == 6)
 	{
 		info = init_params(argv, argc);
 		if (!(pid = (pid_t *)malloc(sizeof(pid) * (*info)->number_of_philo_and_forks)))
 			ft_putendl_plus_error(MALLOC, FAILURE);
 		initialization(info, &args);
-		create_processes(&pid, info, &args);
+		create_processes(&pid, info, &args, &thread);
 		if (waiting_for_processes(info, &pid) == ST_FED)
 			ft_putendl_plus_error(FED, WITHOUT_EXIT);
 		ft_sem_destr();

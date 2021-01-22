@@ -43,14 +43,14 @@ void		check_term_conditions(t_args **args, t_params **info)
 
 
 
-void kill_wait_processes(pid_t **pid, long number)
+void kill_wait_processes(pid_t **pid, long number, long left)
 {
 	long i;
 
 	i = -1;
 	while (++i < number)
 		kill((*pid)[i], SIGKILL);
-	while (--number >= 0)
+	while (--left >= 0)
 		waitpid(-1, NULL, 0);
 }
 
@@ -67,7 +67,7 @@ int	waiting_for_processes(t_params **info, pid_t **pid)
 		{
 			if (WEXITSTATUS(status) == ST_DEATH)
 			{
-				kill_wait_processes(pid, (*info)->number_of_philo_and_forks);
+				kill_wait_processes(pid, (*info)->number_of_philo_and_forks, (*info)->number_of_philo_and_forks - number);
 				sem_post(g_print);
 				return (ST_DEATH);
 			}

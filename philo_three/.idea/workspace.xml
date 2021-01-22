@@ -19,7 +19,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="248589d7-1a70-485f-9f22-7f09fe63b09a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/philo_three.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/philo_three.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header/philo_three.h" beforeDir="false" afterPath="$PROJECT_DIR$/header/philo_three.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/srcs/free_destroy.c" beforeDir="false" afterPath="$PROJECT_DIR$/srcs/free_destroy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/srcs/initialization.c" beforeDir="false" afterPath="$PROJECT_DIR$/srcs/initialization.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/srcs/philo.c" beforeDir="false" afterPath="$PROJECT_DIR$/srcs/philo.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/srcs/philo_inside.c" beforeDir="false" afterPath="$PROJECT_DIR$/srcs/philo_inside.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../philo_two/.idea/philo_two.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../philo_two/.idea/philo_two.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,13 +82,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../philo_two/Makefile" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager" selected="Makefile Application.philo_three">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="all" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="philo_three" TARGET_NAME="all" CONFIG_NAME="all" version="1">
       <method v="2">
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
@@ -120,6 +124,7 @@
       <item itemvalue="Makefile Application.philo_three" />
     </list>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="248589d7-1a70-485f-9f22-7f09fe63b09a" name="Default Changelist" comment="" />
@@ -127,9 +132,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1611257869261</updated>
-      <workItem from="1611257871891" duration="5000" />
+      <workItem from="1611257871891" duration="2827000" />
+      <workItem from="1611301406922" duration="6874000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -141,5 +150,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
