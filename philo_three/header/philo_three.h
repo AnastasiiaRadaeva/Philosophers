@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_three.h                                        :+:      :+:    :+:   */
+/*   philo_three.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kbatwoma <kbatwoma@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 22:48:17 by kbatwoma          #+#    #+#             */
-/*   Updated: 2021/01/18 23:05:08 by kbatwoma         ###   ########.fr       */
+/*   Updated: 2021/01/22 21:05:08 by kbatwoma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_TWO_H
-# define PHILO_TWO_H
+#ifndef PHILO_THREE_H
+# define PHILO_THREE_H
 
 # include <unistd.h>
 # include <string.h>
@@ -52,7 +52,6 @@
 # define ST_FED 3
 # define WITHOUT_EXIT 4
 
-
 typedef struct			s_params
 {
 	long			number_of_philo_and_forks;
@@ -74,8 +73,8 @@ typedef struct			s_args
 {
 	t_params		**info;
 	t_timepad		*time;
-	long 			number_of_philo;
-	long 			timestamp;
+	long			number_of_philo;
+	long			timestamp;
 }						t_args;
 
 extern sem_t			*g_print;
@@ -86,19 +85,14 @@ extern sem_t			*g_check_time;
 extern sem_t			*g_two_fork;
 
 int						initialization(t_params **info, t_args **args);
-void					check_term_conditions(t_args **args, t_params **info);
-void 					create_thread(t_args *args, pthread_t **thread);
-int						waiting_for_processes(t_params **info, pid_t **pid);
-
 t_params				**init_params(char **args, int argc);
-t_args					*init_args(t_params ***info);
-long					ft_g_init(void);
-int						ft_sem_init(long number);
+int						waiting_for_processes(long count_ph, pid_t **pid);
 
 long					ft_atoi(char *str, int flag);
 int						ft_strlen(const char *str);
 void					ft_putendl_plus_error(char *str, int status);
-int						ft_free(t_params ***info, t_args **args, pid_t **pid, int ret);
+int						ft_free(t_params ***info, t_args **args, pid_t **pid,
+																	int ret);
 void					ft_sem_destr(void);
 int						print_state(long name, t_timepad **time, char *str);
 
@@ -106,6 +100,8 @@ t_timepad				*start_time(void);
 void					*time_stop(t_timepad **time, long *timestamp);
 void					reset_time(void);
 
+void					ft_process(t_args **args, long number_of_philo,
+														pthread_t **thread);
 void					*philosopher(void *args);
 int						take_forks(long number, t_timepad **time);
 

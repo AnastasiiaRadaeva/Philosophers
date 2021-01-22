@@ -6,7 +6,7 @@
 #    By: kbatwoma <kbatwoma@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/20 22:47:41 by kbatwoma          #+#    #+#              #
-#    Updated: 2021/01/17 23:19:42 by kbatwoma         ###   ########.fr        #
+#    Updated: 2021/01/22 21:14:42 by kbatwoma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,13 @@ FLAGS 		= 	-Wall -Wextra -Werror
 HEADER_DIR  =	header/
 SRCS_DIR    = 	srcs/
 SRCS_LIST   =	philo.c\
-				philo_inside.c\
 				initialization.c\
-				utils.c\
-				timepad.c\
+				exiting_child_process.c\
+				process.c\
 				dealings.c\
 				dealings_utils.c\
+				utils.c\
+                timepad.c\
 				free_destroy.c
 SRCS		= $(addprefix $(SRCS_DIR), $(SRCS_LIST))
 OBJS		= $(patsubst %.c, %.o, $(SRCS))
